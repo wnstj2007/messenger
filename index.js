@@ -1,6 +1,6 @@
- app = require('express')();
+app = require('express')();
 http = require('http').Server(app);
-io = require('socket.io')(http);
+server = require('socket.io')(http);
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 	res.render('chatPage');
 });
 
-io.on('connection', (socket) => {
+server.on('connection', (socket) => {
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
 	});
@@ -19,17 +19,17 @@ io.on('connection', (socket) => {
 	socket.on('leaveRoom', (name) => {
 		socket.leave(room, () => {});
 		console.log(name + ' has left the ' + room);
-		io.to(room).emit('leaveRoom', name);
+		server.to(room).emit('leaveRoom', name);
 	});
 
 	socket.on('joinRoom', (name) => {
 		socket.join(room, () => {});
 		console.log(name + ' has joined the ' + room);
-		io.to(room).emit('joinRoom', name);
+		server.to(room).emit('joinRoom', name);
 	});
 
 	socket.on('chat message', (name, msg) => {
-		io.to(room).emit('chat message', name, msg);
+		server.to(room).emit('chat message', name, msg);
 	});
 });
 
