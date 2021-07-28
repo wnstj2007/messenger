@@ -3,7 +3,7 @@ http = require('http').Server(app);
 io = require('socket.io')(http);
 
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', __dirname + './views');
 
 let room = 'room';
 
