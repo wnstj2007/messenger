@@ -1,0 +1,31 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            $(() => {
+                name = prompt('set your name');
+                socket = io();
+                let room = 'room';
+
+                // 서버에게 사용자가 접속했음을 알림
+                socket.emit('joinRoom', name);
+
+                socket.on('joinRoom', (name) => {
+                    // 다른 사용자가 채팅방에 접속했을 때 메시지 출력
+                });
+
+                socket.on('leaveRoom', (name) => {
+                    // 다른 사용자가 채팅방에서 나갔을 때 메시지 출력
+                });
+
+                socket.on('chat message', (name, msg) => {
+                    // name과 msg 출력
+                });
+            });
+        </script>
+    </body>
+</html>
