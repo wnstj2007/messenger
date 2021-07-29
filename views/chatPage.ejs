@@ -1,14 +1,21 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Chatting</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+        </style>
     </head>
     <body>
+        <ul id="messages"></ul>
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <script>
             $(() => {
-                name = prompt('set your name');
+                name = prompt('사용자 이름 설정');
                 socket = io();
                 let room = 'room';
 
@@ -17,14 +24,17 @@
 
                 socket.on('joinRoom', (name) => {
                     // 다른 사용자가 채팅방에 접속했을 때 메시지 출력
+                    $('#messages').append($('<li>').text(name + ' has joined the ' + room));
                 });
 
                 socket.on('leaveRoom', (name) => {
                     // 다른 사용자가 채팅방에서 나갔을 때 메시지 출력
+                    $('#messages').append($('<li>').text(name + ' has left the ' + room));
                 });
 
                 socket.on('chat message', (name, msg) => {
                     // name과 msg 출력
+                    $('#messages').append($('<li>').text(name + '  :  ' + msg));
                 });
             });
         </script>
