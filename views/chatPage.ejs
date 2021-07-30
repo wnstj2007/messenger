@@ -10,6 +10,10 @@
         </style>
     </head>
     <body>
+        <form action="">
+            <input id="msg" type="text" autocomplete="off">
+            <input type="submit" value="submit">
+        </form>
         <ul id="messages"></ul>
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -21,6 +25,12 @@
 
                 // 서버에게 사용자가 접속했음을 알림
                 socket.emit('joinRoom', name);
+
+                $('form').submit(() => {
+                    socket.emit('chat message', name, $('#msg').val());
+                    $('#msg').val('');
+                    return false
+                });
 
                 socket.on('joinRoom', (name) => {
                     // 다른 사용자가 채팅방에 접속했을 때 메시지 출력

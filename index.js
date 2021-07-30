@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 	res.render('chatPage');
 });
 
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
 	socket.on('disconnect', () => {
 		console.log('user disconnected');
 	});
