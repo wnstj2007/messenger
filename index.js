@@ -12,8 +12,11 @@ app.get('/', (req, res) => {
 });
 
 io.on('connect', (socket) => {
+	let username = ""
+
 	socket.on('disconnect', () => {
-		console.log('user disconnected');
+		console.log('user ' + username + ' has disconnected');
+		io.to(room).emit('leaveRoom', username)
 	});
 
 	socket.on('leaveRoom', (name) => {
@@ -26,6 +29,7 @@ io.on('connect', (socket) => {
 		socket.join(room, () => {});
 		console.log(name + ' has joined the ' + room);
 		io.to(room).emit('joinRoom', name);
+		username = name
 	});
 
 	socket.on('chat message', (name, msg) => {
