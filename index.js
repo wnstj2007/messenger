@@ -5,15 +5,10 @@ io = require('socket.io')(http);
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+app.use('/', require('./routes/main'));
+app.use('/upload', require('./routes/upload'));
+
 let room = 'room';
-
-app.get('/', (req, res) => {
-	res.render('chatPage');
-});
-
-app.get('/upload', (req, res) => {
-	res.render('upload');
-});
 
 io.on('connect', (socket) => {
 	let username = ""
