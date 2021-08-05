@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
 	res.render('chatPage');
 });
 
