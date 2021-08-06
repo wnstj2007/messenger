@@ -14,6 +14,10 @@
             <input id="msg" type="text" autocomplete="off">
             <input type="submit" value="submit">
         </form>
+        <form action="upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="uploadedFile">
+            <input type='submit' value="submit">
+        </form>
         <ul id="messages"></ul>
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
