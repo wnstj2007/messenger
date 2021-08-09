@@ -1,21 +1,29 @@
 app = require('express')();
 http = require('http').Server(app);
 io = require('socket.io')(http);
+var multer = require('multer');
+var upload = multer({dest: 'uploads/'});
+var filename = "";
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use('/', require('./routes/main'));
-app.use('/upload', require('./routes/upload'));
+
+app.post('/upload', upload.single('uploadedFile'), (req, res) => {
+	console.log(req.file);
+	filename = req.file.originalname;
+	console.log(filename);
+});
 
 let room = 'room';
 
 io.on('connect', (socket) => {
-	let username = ""
+	let username = "";
 
 	socket.on('disconnect', () => {
 		console.log('user ' + username + ' has disconnected');
-		io.to(room).emit('leaveRoom', username)
+		io.to(room).emit('leaveRoom', username);
 	});
 
 	socket.on('leaveRoom', (name) => {
@@ -33,6 +41,10 @@ io.on('connect', (socket) => {
 
 	socket.on('chat message', (name, msg) => {
 		io.to(room).emit('chat message', name, msg);
+	});
+
+	socket.on('upload file', (name) => {
+		io.to(room).emit('upload file', name, filename);
 	});
 });
 

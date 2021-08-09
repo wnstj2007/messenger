@@ -10,13 +10,13 @@
         </style>
     </head>
     <body>
-        <form action="">
+        <form id="chat">
             <input id="msg" type="text" autocomplete="off">
             <input type="submit" value="submit">
         </form>
-        <form action="upload" method="post" enctype="multipart/form-data">
+        <form action="/upload" id="upload" method="post" enctype="multipart/form-data">
             <input type="file" name="uploadedFile">
-            <input type='submit' value="submit">
+            <input type="submit" value="upload">
         </form>
         <ul id="messages"></ul>
         <script src="/socket.io/socket.io.js"></script>
@@ -30,10 +30,16 @@
                 // 서버에게 사용자가 접속했음을 알림
                 socket.emit('joinRoom', name);
 
-                $('form').submit(() => {
+                jQuery('#chat').submit(() => {
                     socket.emit('chat message', name, $('#msg').val());
                     $('#msg').val('');
                     return false
+                });
+
+                jQuery('#upload').submit(() => {
+                    socket.emit('upload file', name);
+                    alert('upload success!');
+                    //return false
                 });
 
                 socket.on('joinRoom', (name) => {
@@ -49,6 +55,10 @@
                 socket.on('chat message', (name, msg) => {
                     // name과 msg 출력
                     $('#messages').append($('<li>').text(name + '  :  ' + msg));
+                });
+
+                socket.on('upload file', (name, filename) => {
+                    //<a href="/uploads/" download>클릭</a>
                 });
             });
         </script>
