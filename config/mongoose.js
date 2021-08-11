@@ -12,7 +12,10 @@ mongoose.connect(config.db, {
 const File = new Schema({
   name: String,
   originalName: String,
-  content: Buffer
+  content: Buffer,
 });
 
-module.exports = mongoose;
+module.exports = { 
+  mongoose: mongoose,
+  model = mongoose.model("chat", File),
+};
