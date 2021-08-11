@@ -39,7 +39,6 @@
                 jQuery('#upload').submit(() => {
                     socket.emit('upload file', name);
                     alert('upload success!');
-                    //return false
                 });
 
                 socket.on('joinRoom', (name) => {
@@ -59,6 +58,7 @@
 
                 socket.on('upload file', (name, filename) => {
                     //<a href="/uploads/" download>클릭</a>
+                    $('#messages').append("<a href=\"/download/"+ filename +"\" download>클릭</a>");
                 });
             });
         </script>
