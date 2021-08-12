@@ -8,6 +8,7 @@ mongoose.connect(config.db, {
     useCreateIndex: true,
     useUnifiedTopology: true,
 });
+const db = mongoose.connection;
 
 const File = new Schema({
   name: String,
@@ -17,5 +18,5 @@ const File = new Schema({
 
 module.exports = { 
   mongoose: mongoose,
-  model = mongoose.model("chat", File),
+  model: mongoose.model("chat", File),
 };
