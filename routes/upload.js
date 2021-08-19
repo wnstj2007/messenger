@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { mongoose, model } = require('../config/mongoose');
-const fs = require('fs')
+const fs = require('fs');
 const multer = require('multer');
 
 router.use(
@@ -21,9 +21,8 @@ router.post('/', (req, res) => {
 	let originalName = file.originalname;
 	let size = file.size;
 	let path = __dirname + '\\..\\uploads\\' + file.filename;
-	console.log(path);
 	fs.open(path, 'r', (err, fd) => {
-		let buf = new Buffer(size);
+		let buf = new Buffer.alloc(size);
 		fs.read(fd, buf, 0, buf.length, null, (err, bytes, buffer) => {
 			let obj = {
 				'name': file.filename,

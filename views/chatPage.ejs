@@ -56,9 +56,9 @@
                     $('#messages').append($('<li>').text(name + '  :  ' + msg));
                 });
 
-                socket.on('upload file', (name, filename) => {
+                socket.on('upload success', (name, id) => {
                     //<a href="/uploads/" download>클릭</a>
-                    $('#messages').append("<a href=\"/download/"+ filename +"\" download>클릭</a>");
+                    $('#messages').append("<a href=\"/download/"+ id +"\" download>클릭</a>");
                 });
             });
         </script>

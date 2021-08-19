@@ -1,16 +1,14 @@
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+let id = 1;
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use('/', require('./routes/main'));
 app.use('/upload', require('./routes/upload'));
-
-app.get('/download', (req, res) => {
-	res.download('./uploads/c76a3159f46603b69995790002512b9c');
-});
+app.use('/download', require('./routes/download'));
 
 let room = 'room';
 
@@ -40,7 +38,8 @@ io.on('connect', (socket) => {
 	});
 
 	socket.on('upload file', (name) => {
-		io.to(room).emit('upload file', name, '');
+		io.to(room).emit('upload success', name, id);
+		id++;
 	});
 });
 
