@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { mongoose, model } = require('../config/mongoose');
-const fs = require('fs');
 
 router.get('/:id', (req, res) => {
     console.log(req.params.id);
